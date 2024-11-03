@@ -36,7 +36,7 @@ func New() *C {
 	flag.BoolVar(&c.DryRun, "dry", false, "do not write anything (default false)")
 
 	flag.Usage = func() {
-		fmt.Println("godot-utils [OPTIONS] project_name godot_binary")
+		fmt.Println("gdextension [OPTIONS] project_name godot_binary")
 		fmt.Println("Arguments:\n  project_name\n\tname of project (required)\n  godot_binary\n\tpath to godot executable (required)")
 		fmt.Println("Options:")
 		flag.PrintDefaults()
