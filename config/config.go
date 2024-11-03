@@ -41,7 +41,7 @@ func New() *C {
 		fmt.Println("Options:")
 		flag.PrintDefaults()
 		fmt.Println("Example:")
-		fmt.Println("godot-utils -all -j 20 foobar /bin/godot")
+		fmt.Println("gdextension -all -j 20 foobar /bin/godot")
 	}
 	return &c
 }

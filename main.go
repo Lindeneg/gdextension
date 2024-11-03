@@ -108,7 +108,4 @@ func main() {
 	c.DieCleanOnErr(steps.Execute())
 
 	fmt.Println("GDExtension setup succesfully completed.")
-	fmt.Println("Now run:")
-	fmt.Printf("cd %s\n", cfg.P.NameL)
-	fmt.Println("./misc/run.sh")
 }
