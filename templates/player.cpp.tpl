@@ -1,0 +1,26 @@
+#include "player.h"
+
+#include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/collision_shape2d.hpp>
+
+namespace godot::{{.ProjectName}} {
+void Player::_ready() {
+    REQUIRED_CHILD(sprite_, "Sprite", AnimatedSprite2D);
+    REQUIRED_CHILD(collision_shape_, "CollisionShape", CollisionShape2D);
+{{if .WithLogger}}
+    log_ = Logger::with_prefix(get_name());
+    log_->debug("Player is ready!");
+{{end}}
+}
+
+void Player::_bind_methods() {
+    MPV_BIND(health, Player, Variant::INT)
+    MPN_BIND(sprite, Player, AnimatedSprite2D);
+    MPN_BIND(collision_shape, Player, CollisionShape2D)
+}
+
+Player::Player() {}
+Player::~Player() {}
+}  // namespace godot::{{.ProjectName}}
+
+
