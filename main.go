@@ -50,40 +50,62 @@ func main() {
 		WithExample:      cfg.WithExample,
 	})
 
-	c := utils.Crasher{Root: cfg.P.Root}
-
-	fmt.Println("Creating core folders..")
-	c.DieCleanOnErr(cfg.P.CreateFolders(tpls))
-
-	fmt.Println("Creating core files..")
-	c.DieCleanOnErr(cfg.P.CreateFiles(tpls))
-
-	fmt.Println("Cloning godot-cpp")
-	c.DieCleanOnErr(cfg.G.Clone(cfg.P.Root))
+	steps := utils.MakeSteps().
+		Add(
+			utils.Step{
+				Msg:      "Creating core folders",
+				Callback: func() error { return cfg.P.CreateFolders(tpls) },
+			},
+			utils.Step{
+				Msg:      "Creating core files",
+				Callback: func() error { return cfg.P.CreateFiles(tpls) },
+			},
+			utils.Step{
+				Msg:      "Cloning godot-cpp",
+				Callback: func() error { return cfg.G.Clone(cfg.P.Root) },
+			},
+		)
 
 	if tpls.Cfg.Platform == "windows" && cfg.G.Version.Major <= 4 && cfg.G.Version.Minor < 3 {
-		fmt.Println("Patching godot-cpp tools")
-		c.DieCleanOnErr(cfg.G.Patch(cfg.P.Root, tpls))
+		steps.Add(
+			utils.Step{
+				Msg:      "Patching godot-cpp tools",
+				Callback: func() error { return cfg.G.Patch(cfg.P.Root, tpls) },
+			},
+		)
 	}
 
-	fmt.Println("Dumping GDExtension API JSON file")
-	c.DieCleanOnErr(cfg.G.DumpExtension(cfg.P.Root))
+	steps.Add(
+		utils.Step{
+			Msg:      "Dumping GDExtension API JSON file",
+			Callback: func() error { return cfg.G.DumpExtension(cfg.P.Root) },
+		},
+		utils.Step{
+			Msg: "Compiling godot-cpp with custom extension API",
+			Callback: func() error {
+				return utils.CompileSconsEx(utils.CompileOpts{
+					Cwd:      filepath.Join(cfg.P.Root, "godot-cpp"),
+					J:        tpls.Cfg.Jobs,
+					Platform: tpls.Cfg.Platform,
+					Arch:     tpls.Cfg.Arch,
+				})
+			},
+		},
+		utils.Step{
+			Msg: "Compiling main project",
+			Callback: func() error {
+				return utils.CompileScons(utils.CompileOpts{
+					Cwd:      cfg.P.Root,
+					J:        tpls.Cfg.Jobs,
+					Platform: tpls.Cfg.Platform,
+					Arch:     tpls.Cfg.Arch,
+				})
+			},
+		},
+	)
 
-	fmt.Println("Compiling godot-cpp with custom extension API..")
-	c.DieCleanOnErr(utils.CompileSconsEx(utils.CompileOpts{
-		Cwd:      filepath.Join(cfg.P.Root, "godot-cpp"),
-		J:        tpls.Cfg.Jobs,
-		Platform: tpls.Cfg.Platform,
-		Arch:     tpls.Cfg.Arch,
-	}))
-
-	fmt.Println("Compiling main project..")
-	c.DieCleanOnErr(utils.CompileScons(utils.CompileOpts{
-		Cwd:      cfg.P.Root,
-		J:        tpls.Cfg.Jobs,
-		Platform: tpls.Cfg.Platform,
-		Arch:     tpls.Cfg.Arch,
-	}))
+	c := utils.Crasher{Root: cfg.P.Root}
+	c.DieCleanOnErr(steps.Execute())
 
 	fmt.Println("GDExtension setup succesfully completed.")
 	fmt.Println("Now run:")

@@ -11,7 +11,7 @@ import (
 	"text/template"
 )
 
-//go:embed *.tpl
+//go:embed *.gotpl
 var FS embed.FS
 
 type Template struct {
@@ -72,28 +72,28 @@ type T struct {
 
 func New(c Config) *T {
 	t := T{Cfg: c}
-	t.build = parseFS(FS, "build.tpl")
-	t.gdExtension = parseFS(FS, "extension.gdextension.tpl")
-	t.gitIgnore = parseFS(FS, "gitignore.tpl")
-	t.globalCPP = parseFS(FS, "global.cpp.tpl")
-	t.globalH = parseFS(FS, "global.h.tpl")
-	t.patchIos = parseFS(FS, "godot_tools_ios.tpl")
-	t.patchLinux = parseFS(FS, "godot_tools_linux.tpl")
-	t.patchTargets = parseFS(FS, "godot_tools_targets.tpl")
-	t.patchWindows = parseFS(FS, "godot_tools_windows.tpl")
-	t.icon = parseFS(FS, "icon.svg.tpl")
-	t.loggerCPP = parseFS(FS, "logger.cpp.tpl")
-	t.loggerH = parseFS(FS, "logger.h.tpl")
-	t.macrosH = parseFS(FS, "macros.h.tpl")
-	t.exampleCPP = parseFS(FS, "player.cpp.tpl")
-	t.exampleH = parseFS(FS, "player.h.tpl")
-	t.projectGodot = parseFS(FS, "project.godot.tpl")
-	t.registerCPP = parseFS(FS, "register_types.cpp.tpl")
-	t.registerH = parseFS(FS, "register_types.h.tpl")
-	t.run = parseFS(FS, "run.tpl")
-	t.scons = parseFS(FS, "scons.tpl")
-	t.utilsCPP = parseFS(FS, "utils.cpp.tpl")
-	t.utilsH = parseFS(FS, "utils.h.tpl")
+	t.build = parseFS(FS, "build.gotpl")
+	t.gdExtension = parseFS(FS, "extension.gdextension.gotpl")
+	t.gitIgnore = parseFS(FS, "gitignore.gotpl")
+	t.globalCPP = parseFS(FS, "global.cpp.gotpl")
+	t.globalH = parseFS(FS, "global.h.gotpl")
+	t.patchIos = parseFS(FS, "godot_tools_ios.gotpl")
+	t.patchLinux = parseFS(FS, "godot_tools_linux.gotpl")
+	t.patchTargets = parseFS(FS, "godot_tools_targets.gotpl")
+	t.patchWindows = parseFS(FS, "godot_tools_windows.gotpl")
+	t.icon = parseFS(FS, "icon.svg.gotpl")
+	t.loggerCPP = parseFS(FS, "logger.cpp.gotpl")
+	t.loggerH = parseFS(FS, "logger.h.gotpl")
+	t.macrosH = parseFS(FS, "macros.h.gotpl")
+	t.exampleCPP = parseFS(FS, "player.cpp.gotpl")
+	t.exampleH = parseFS(FS, "player.h.gotpl")
+	t.projectGodot = parseFS(FS, "project.godot.gotpl")
+	t.registerCPP = parseFS(FS, "register_types.cpp.gotpl")
+	t.registerH = parseFS(FS, "register_types.h.gotpl")
+	t.run = parseFS(FS, "run.gotpl")
+	t.scons = parseFS(FS, "scons.gotpl")
+	t.utilsCPP = parseFS(FS, "utils.cpp.gotpl")
+	t.utilsH = parseFS(FS, "utils.h.gotpl")
 	return &t
 }
 

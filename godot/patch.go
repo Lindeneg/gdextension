@@ -1,4 +1,3 @@
-// https://github.com/godotengine/godot-cpp/pull/1504/files#diff-769d3a0fa0df88f8c7410e5350aeb9b2dab4fa58f9a4d4639b746e9d3483b706
 package godot
 
 import (
