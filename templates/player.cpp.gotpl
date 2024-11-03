@@ -3,6 +3,8 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 
+#include "../core/utils.h"
+
 namespace godot::{{.ProjectName}} {
 void Player::_ready() {
     REQUIRED_CHILD(sprite_, "Sprite", AnimatedSprite2D);
@@ -20,7 +22,10 @@ void Player::_bind_methods() {
 }
 
 Player::Player() {}
-Player::~Player() {}
+Player::~Player() {
+    utils::queue_delete(sprite_);
+    utils::queue_delete(collision_shape_);
+}
 }  // namespace godot::{{.ProjectName}}
 
 
