@@ -40,7 +40,7 @@ func compileScons(co CompileOpts, args ...string) error {
 		"target=template_debug",
 		"compiledb=yes",
 	)
-    fmt.Printf("\tcwd: '%s'\n\topts: '%s'\n", co.Cwd, strings.Join(args, " "))
+	fmt.Printf("\tcwd: '%s'\n\topts: '%s'\n", co.Cwd, strings.Join(args, " "))
 	fmt.Println("Please wait.. This could take a few mins..")
 	if err := SilentCmd("scons", args...); err != nil {
 		return err
