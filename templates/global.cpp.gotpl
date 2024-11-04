@@ -1,41 +1,41 @@
 #include "global.h"
 
-static bool equal_rel(float a, float b) {
+static bool equal_rel(const float a, const float b) {
     return (godot::Math::absf(a - b) <=
             (godot::Math::max(godot::Math::absf(a), godot::Math::absf(b)) *
-             godot::{{.ProjectName}}::global::REL_EPSILON));
+             godot::aquilia::global::REL_EPSILON));
 }
 
 namespace godot::{{.ProjectName}}::global {
-bool equalf(float a, float b) {
+bool equalf(const float a, const float b) {
     if (Math::absf(a - b) <= ABS_EPSILON) {
         return true;
     }
     return equal_rel(a, b);
 }
 
-bool greater_equalf(float a, float b) {
+bool greater_equalf(const float a, const float b) {
     if (equalf(a, b)) {
         return true;
     }
     return a > b;
 }
 
-bool less_equalf(float a, float b) {
+bool less_equalf(const float a, const float b) {
     if (equalf(a, b)) {
         return true;
     }
     return a < b;
 }
 
-bool greaterf(float a, float b) {
+bool greaterf(const float a, const float b) {
     if (equalf(a, b)) {
         return false;
     }
     return a > b;
 }
 
-bool lesserf(float a, float b) {
+bool lesserf(const float a, const float b) {
     if (equalf(a, b)) {
         return false;
     }

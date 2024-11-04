@@ -7,7 +7,6 @@
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/error_macros.hpp>
-#include <godot_cpp/variant/callable.hpp>
 
 namespace godot::{{.ProjectName}} {
 bool utils::is_in_editor() {
@@ -26,13 +25,15 @@ const char *utils::convert_gd_string(const Resource *n) {
     return convert_gd_string(n->get_name());
 }
 
-const char *utils::convert_gd_string(StringName s) {
+const char *utils::convert_gd_string(const StringName &s) {
     return convert_gd_string(String(s));
 }
 
-const char *utils::convert_gd_string(String s) { return s.utf8().get_data(); }
+const char *utils::convert_gd_string(const String &s) {
+    return s.utf8().get_data();
+}
 
-void utils::connect(Node *node, const StringName name,
+void utils::connect(Node *node, const StringName &name,
                     const Callable &callable) {
     ERR_FAIL_NULL_MSG(node, vformat("cannot connect to signal %s", name));
     if (!node->is_connected(name, callable)) {
@@ -43,7 +44,7 @@ void utils::connect(Node *node, const StringName name,
     }
 }
 
-void utils::disconnect(Node *node, const StringName name,
+void utils::disconnect(Node *node, const StringName &name,
                        const Callable &callable) {
     if (!node) return;
     if (node->is_connected(name, callable)) {
@@ -58,8 +59,16 @@ void utils::queue_delete(Node *node) {
     node->queue_free();
 }
 
-bool utils::is_pressed(StringName name) {
+bool utils::input_pressed(const StringName &name) {
     return Input::get_singleton()->is_action_pressed(name);
+}
+
+bool utils::input_down(const StringName &name) {
+    return Input::get_singleton()->is_action_just_pressed(name);
+}
+
+bool utils::input_up(const StringName &name) {
+    return Input::get_singleton()->is_action_just_released(name);
 }
 }  // namespace godot::{{.ProjectName}}
 

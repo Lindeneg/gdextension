@@ -1,1 +1,1 @@
-scons -j{{.Jobs}} platform={{.Platform}} arch={{.Arch}} target=template_debug compiledb=yes
+scons -j{{.Jobs}} platform={{.Platform}} arch={{.Arch}} target=template_debug debug_symbols=yes compiledb=yes

@@ -4,8 +4,6 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
-#include "./utils.h"
-
 #define GDSTR(s) utils::convert_gd_string(s)
 
 #define MAKE_RESOURCE_TYPE_HINT(m_type) \
@@ -15,20 +13,20 @@
     {                                                                        \
         Node *child{find_child(pattern)};                                    \
         ERR_FAIL_NULL_MSG(child, "required component " #name " is missing"); \
-        name = static_cast<type *>(child);                                   \
+        name = dynamic_cast<type *>(child);                                  \
     }
 
-#define FIND_OR_CREATE_CHILD(name, pattern, type)                  \
-    {                                                              \
-        if (!name) {                                               \
-            type *child{static_cast<type *>(find_child(pattern))}; \
-            if (child) {                                           \
-                name = static_cast<type *>(child);                 \
-            } else {                                               \
-                name = utils::create_component<type>(this);        \
-                name->set_name(pattern);                           \
-            }                                                      \
-        }                                                          \
+#define FIND_OR_CREATE_CHILD(name, pattern, type)           \
+    {                                                       \
+        if (!name) {                                        \
+            Node *child{find_child(pattern)};               \
+            if (child) {                                    \
+                name = dynamic_cast<type *>(child);         \
+            } else {                                        \
+                name = utils::create_component<type>(this); \
+                name->set_name(pattern);                    \
+            }                                               \
+        }                                                   \
     }
 
 #define REQUIRED_CHILD(name, pattern, type)        \
@@ -38,11 +36,12 @@
         FIND_CHILD(name, pattern, type);           \
     }
 
-// macros to ease the godots boilerplates
+// macros to ease the godot boilerplate
 // and for exposing properties to editor
 
 #define GDCLASS_EX(cls, base) \
-    GDCLASS(cls, base)        \
+    GDCLASS(cls, base);       \
+                              \
    public:                    \
     cls();                    \
     ~cls();                   \
@@ -82,7 +81,7 @@
    public:                 \
     M_GET(name, type)
 
-// declaration, initialazation and getter
+// declaration, initialization and getter
 #define MDV_GET(name, type, value) \
     P_DECL_V(name, type, value)    \
    public:                         \
@@ -99,7 +98,7 @@
     P_DECL(name, type)         \
     M_GET_SET(name, type)
 
-// declaration, initialazation, getter and const setter
+// declaration, initialization, getter and const setter
 #define MDV_GET_SET(name, type, value) \
     P_DECL_V(name, type, value)        \
     M_GET_SET(name, type)
@@ -115,7 +114,7 @@
     P_DECL(name, type)           \
     M_GET_SET_R(name, type)
 
-// declaration, initialazation, getter and const ref setter methods
+// declaration, initialization, getter and const ref setter methods
 #define MDV_GET_SET_R(name, type, value) \
     P_DECL_V(name, type, value)          \
     M_GET_SET_R(name, type)
@@ -131,7 +130,7 @@
     P_DECL(name, type)           \
     M_GET_SET_T(name, type)
 
-// declaration, initialzation, getter and T setter methods
+// declaration, initialization, getter and T setter methods
 #define MDV_GET_SET_T(name, type, value) \
     P_DECL_V(name, type, value)          \
     M_GET_SET_T(name, type)

@@ -21,7 +21,7 @@ void Player::_bind_methods() {
     MPN_BIND(collision_shape, Player, CollisionShape2D)
 }
 
-Player::Player() {}
+Player::Player() = default;
 Player::~Player() {
     utils::queue_delete(sprite_);
     utils::queue_delete(collision_shape_);

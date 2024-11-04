@@ -24,7 +24,7 @@ class Player : public CharacterBody2D {
 
    private:
    {{if .WithLogger}}
-    Ref<Logger> log_;
+    Ref<Logger> log_ = {};
     {{end}}
 
    public:
