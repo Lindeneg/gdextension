@@ -1,5 +1,5 @@
 build:
-	go build -o bin/gdextension *.go
+	go build -o bin/gdextension main.go
 
 run: build
 	./bin/gdextension
