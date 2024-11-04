@@ -38,7 +38,6 @@ func compileScons(co CompileOpts, args ...string) error {
 		"platform="+co.Platform,
 		"arch="+co.Arch,
 		"target=template_debug",
-		"debug_symbols=yes",
 		"compiledb=yes",
 	)
 	fmt.Printf("\tcwd: '%s'\n\topts: '%s'\n", co.Cwd, strings.Join(args, " "))

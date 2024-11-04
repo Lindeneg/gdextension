@@ -104,8 +104,12 @@ func main() {
 		},
 	)
 
-	utils.NewCrasher(cfg.P.Root).
-		DieCleanOnErr(steps.Execute())
+	if cfg.Dirty {
+		steps.Execute()
+	} else {
+		utils.NewCrasher(cfg.P.Root).
+			DieCleanOnErr(steps.Execute())
+	}
 
 	fmt.Println("GDExtension setup succesfully completed.")
 }

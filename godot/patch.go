@@ -31,11 +31,11 @@ var (
 func patch(root string) error {
 	for _, patch := range patches {
 		fp := filepath.Join(root, "godot-cpp", "tools", patch+".py")
-		r := replacement[patch]
-		if err := patchFile(fp, fmt.Sprintf("%s %s", targetPrefix, r)); err != nil {
+		r := fmt.Sprintf("%s %s", targetPrefix, replacement[patch])
+		if err := patchFile(fp, r); err != nil {
 			return err
 		}
-		fmt.Printf("Succesfully patched '%s'\n", fp)
+		fmt.Printf("\tpatched '%s'\n\t  --%s\n\t  ++%s\n", fp, string(target), r)
 	}
 	return nil
 

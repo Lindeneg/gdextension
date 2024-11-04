@@ -3,7 +3,7 @@
 static bool equal_rel(const float a, const float b) {
     return (godot::Math::absf(a - b) <=
             (godot::Math::max(godot::Math::absf(a), godot::Math::absf(b)) *
-             godot::aquilia::global::REL_EPSILON));
+             godot::{{.ProjectName}}::global::REL_EPSILON));
 }
 
 namespace godot::{{.ProjectName}}::global {

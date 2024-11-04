@@ -15,7 +15,7 @@ enum LogLevel { SILENT, DEBUG, WARN, ERROR, FATAL };
 class Logger : public RefCounted {
     GDCLASS_EX(Logger, RefCounted)
 
-#ifdef AQUILIA_EXTENSION_DEBUG
+#ifdef {{.ProjectNameUpper}}_EXTENSION_DEBUG
     MDV_GET_SET(level, LogLevel, FATAL);
 #else
     MDV_GET_SET(level, LogLevel, SILENT);

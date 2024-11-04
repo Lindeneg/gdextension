@@ -20,6 +20,7 @@ type C struct {
 	WithExample bool
 	WithAll     bool
 	DryRun      bool
+	Dirty       bool
 }
 
 func New() *C {
@@ -34,6 +35,7 @@ func New() *C {
 	flag.BoolVar(&c.WithExample, "example", false, "include godot c++ example (default false)")
 	flag.BoolVar(&c.WithAll, "all", false, "include all c++ files (default false)")
 	flag.BoolVar(&c.DryRun, "dry", false, "do not write anything (default false)")
+	flag.BoolVar(&c.Dirty, "no-clean", false, "do not delete created files, if an error occurs (default false)")
 
 	flag.Usage = func() {
 		fmt.Println("gdextension [OPTIONS] project_name godot_binary")
