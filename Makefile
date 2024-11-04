@@ -10,6 +10,3 @@ run: build
 create: build
 	./bin/gdextension -no-clean -all -jobs 18 foobar gd421
 
-create43: build
-	./bin/gdextension -no-clean -all -jobs 18 foobar gd43
-
