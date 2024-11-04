@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/lindeneg/godot-utils/templates"
 	"github.com/lindeneg/godot-utils/utils"
 )
 
@@ -72,8 +71,8 @@ func (g *G) DumpExtension(rootPath string) error {
 	return nil
 }
 
-func (g *G) Patch(root string, tpls *templates.T) error {
-	return patch(root, tpls)
+func (g *G) Patch(root string) error {
+	return patch(root)
 }
 
 func (g *G) setVersion() error {
