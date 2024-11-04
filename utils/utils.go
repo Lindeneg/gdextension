@@ -19,7 +19,7 @@ func CompileScons(co CompileOpts) error {
 }
 
 func CompileSconsEx(co CompileOpts) error {
-	return compileScons(co, "custom_api_file=../extension_api.json")
+	return compileScons(co, "custom_api_file=./extension_api.json")
 }
 
 func SilentCmd(name string, args ...string) error {

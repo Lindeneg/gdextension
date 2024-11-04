@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 	"runtime"
 
 	"github.com/lindeneg/godot-utils/config"
@@ -81,20 +80,9 @@ func main() {
 			Callback: func() error { return cfg.G.DumpExtension(cfg.P.Root) },
 		},
 		utils.Step{
-			Msg: "Compiling godot-cpp with custom extension API",
-			Callback: func() error {
-				return utils.CompileSconsEx(utils.CompileOpts{
-					Cwd:      filepath.Join(cfg.P.Root, "godot-cpp"),
-					J:        tpls.Cfg.Jobs,
-					Platform: tpls.Cfg.Platform,
-					Arch:     tpls.Cfg.Arch,
-				})
-			},
-		},
-		utils.Step{
 			Msg: "Compiling main project",
 			Callback: func() error {
-				return utils.CompileScons(utils.CompileOpts{
+				return utils.CompileSconsEx(utils.CompileOpts{
 					Cwd:      cfg.P.Root,
 					J:        tpls.Cfg.Jobs,
 					Platform: tpls.Cfg.Platform,
