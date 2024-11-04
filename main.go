@@ -70,7 +70,7 @@ func main() {
 		steps.Add(
 			utils.Step{
 				Msg:      "Patching godot-cpp tools",
-				Callback: func() error { return cfg.G.Patch(cfg.P.Root, tpls) },
+				Callback: func() error { return cfg.G.Patch(cfg.P.Root) },
 			},
 		)
 	}
