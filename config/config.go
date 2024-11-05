@@ -21,6 +21,7 @@ type C struct {
 	WithAll     bool
 	DryRun      bool
 	Dirty       bool
+	Patches     bool
 }
 
 func New() *C {
@@ -36,6 +37,7 @@ func New() *C {
 	flag.BoolVar(&c.WithAll, "all", false, "include all c++ files (default false)")
 	flag.BoolVar(&c.DryRun, "dry", false, "do not write anything (default false)")
 	flag.BoolVar(&c.Dirty, "no-clean", false, "do not delete created files, if an error occurs (default false)")
+	flag.BoolVar(&c.Patches, "force-patch", false, "force patches to godot-cpp/tools (default false)")
 
 	flag.Usage = func() {
 		fmt.Println("gdextension [OPTIONS] project_name godot_binary")

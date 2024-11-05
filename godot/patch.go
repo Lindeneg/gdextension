@@ -24,6 +24,10 @@ var (
 	}
 )
 
+func ShouldPatch(platform string, major int, minor int) bool {
+	return platform == "windows" && (major < 4 || major == 4 && minor < 3)
+}
+
 // there's an import error from scons when compiling on windows
 // with godot-cpp versions lower than 4.3. The error is fixed in this PR:
 // https://github.com/godotengine/godot-cpp/pull/1504/files#diff-769d3a0fa0df88f8c7410e5350aeb9b2dab4fa58f9a4d4639b746e9d3483b706

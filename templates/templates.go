@@ -15,11 +15,11 @@ import (
 var FS embed.FS
 
 type Template struct {
-	htmlTpl *template.Template
+	tpl *template.Template
 }
 
 func (t Template) Execute(w io.Writer, data interface{}) error {
-	tpl := t.htmlTpl
+	tpl := t.tpl
 	var buf bytes.Buffer
 	if err := tpl.Execute(&buf, data); err != nil {
 		return err

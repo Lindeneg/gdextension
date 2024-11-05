@@ -65,7 +65,7 @@ func main() {
 			},
 		)
 
-	if tpls.Cfg.Platform == "windows" && cfg.G.Version.Major <= 4 && cfg.G.Version.Minor < 3 {
+	if cfg.Patches || godot.ShouldPatch(tpls.Cfg.Platform, cfg.G.Version.Major, cfg.G.Version.Minor) {
 		steps.Add(
 			utils.Step{
 				Msg:      "Patching godot-cpp tools",
@@ -92,12 +92,8 @@ func main() {
 		},
 	)
 
-	if cfg.Dirty {
-		steps.Execute()
-	} else {
-		utils.NewCrasher(cfg.P.Root).
-			DieCleanOnErr(steps.Execute())
-	}
+	utils.NewCrasher(cfg.P.Root).
+		DieCleanOnErr(steps.Execute(), !cfg.Dirty)
 
 	fmt.Println("GDExtension setup succesfully completed.")
 }
